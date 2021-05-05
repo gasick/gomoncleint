@@ -20,20 +20,20 @@ type DiskStatus struct {
 	Free uint64 `json:"free"`
 }
 
-// реализация интерфейса Responser для CPUStatus
+// реализация интерфейса Responser для DiskStatus
 func (ds *DiskStatus) String() string {
 	result := fmt.Sprintf("All: %v, Used: %v, Free: %v", ds.All, ds.Used, ds.Free)
 	return result
 }
 
-// структура слушателя CPU
+// структура слушателя Disk
 type DiskListener struct {
 	Delay   int    // задержка слушателя
 	Timeout int    // таймаут опроса
 	Path    string // хз
 }
 
-// реализация интерфейса Listener для CPUListener
+// реализация интерфейса Listener для DiskListener
 func (d *DiskListener) getStatus() (DiskStatus, error) {
 
 	fs := syscall.Statfs_t{}
