@@ -15,11 +15,12 @@ func getEnv(key, fallback string) string {
 
 // Cтруктура для хранения конфига из env
 type Config struct {
-	CPUDelay    int // задержка опроса для CPU
-	DiskDelay   int // задержка опроса для DISK
-	RAMDelay    int // задержка опроса для RAM
-	CommonDelay int // общая задержка запроса
-	Timeout     int // таймаут ожидания ответа от слушателя
+	CPUDelay    int    // задержка опроса для CPU
+	DiskDelay   int    // задержка опроса для DISK
+	RAMDelay    int    // задержка опроса для RAM
+	CommonDelay int    // общая задержка запроса
+	Timeout     int    // таймаут ожидания ответа от слушателя
+	Path        string // путь до диска
 }
 
 // конструктор для структуры конфигурации
@@ -29,6 +30,7 @@ func New() *Config {
 	ramDelay, _ := strconv.Atoi(getEnv("RAM_DELAY", "500"))
 	commonDelay, _ := strconv.Atoi(getEnv("COMMON_DELAY", "500"))
 	timeout, _ := strconv.Atoi(getEnv("TIMEOUT", "500"))
+	path := getEnv("DISK_PATH", "")
 
 	return &Config{
 		CPUDelay:    cpuDelay,
@@ -36,5 +38,6 @@ func New() *Config {
 		RAMDelay:    ramDelay,
 		CommonDelay: commonDelay,
 		Timeout:     timeout,
+		Path:        path,
 	}
 }
