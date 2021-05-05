@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-
 	for {
 		fmt.Printf("Docker state: ")
 		printDockerState()
