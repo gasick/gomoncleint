@@ -10,8 +10,8 @@ import (
 
 // структура респонса от слушателя CPU
 type CPUStatus struct {
-	Num   byte
-	Usage []float32
+	Num   int
+	Usage []float64
 }
 
 // реализация интерфейса Responser для CPUStatus
@@ -27,12 +27,18 @@ type CPUListener struct {
 
 // реализация интерфейса Listener для CPUListener
 func (c *CPUListener) getStatus() (CPUStatus, error) {
-	val, err := cpu.Percent(time.Microsecond*0, true)
-
+	usage, err := cpu.Percent(time.Microsecond*0, true)
 	if err != nil {
 		log.Panic("CPUListener error: ", err)
 		return CPUStatus{}, err
 	}
 
-	fmt.Println(val)
+	num, err := cpu.Counts(true)
+	if err != nil {
+		log.Panic("CPUListener error: ", err)
+		return CPUStatus{}, err
+	}
+
+	result := CPUStatus{Num: num, Usage: usage}
+	return result, nil
 }
