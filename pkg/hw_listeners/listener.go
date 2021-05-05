@@ -2,7 +2,7 @@ package hw_listeners
 
 // интерфейс ответа от слушателя
 type Responser interface {
-	Read() interface{}
+	String() interface{}
 }
 
 // интерфейс слушателя
