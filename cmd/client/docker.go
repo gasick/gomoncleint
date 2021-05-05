@@ -8,7 +8,7 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func main() {
+func printDockerState() {
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		panic(err)
@@ -30,9 +30,4 @@ func main() {
 		fmt.Print(" -- ")
 		fmt.Println(container.Ports)
 	}
-
-	disk := DiskUsage("/")
-	fmt.Printf("All: %.2f GB\n", float64(disk.All)/float64(GB))
-	fmt.Printf("Used: %.2f GB\n", float64(disk.Used)/float64(GB))
-	fmt.Printf("Free: %.2f GB\n", float64(disk.Free)/float64(GB))
 }
