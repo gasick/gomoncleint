@@ -34,13 +34,13 @@ type RAMListener struct {
 }
 
 // реализация интерфейса Listener для RAMListener
-func (d *RAMListener) getStatus() (RAMListener, error) {
+func (d *RAMListener) getStatus() (RAMStatus, error) {
 
 	info := syscall.Sysinfo_t{}
 	err := syscall.Sysinfo(&info)
 	if err != nil {
 		log.Panic("RAMListener error:", err)
-		return RAMListener{}, err
+		return RAMStatus{}, err
 	}
 
 	// uptime seconds since boot
@@ -55,25 +55,7 @@ func (d *RAMListener) getStatus() (RAMListener, error) {
 		TotalSwap: float64(info.Totalswap) / float64(GB),
 		FreeSwap:  float64(info.Freeswap) / float64(GB),
 	}
-	uptime := t.Format("15:04:05 2006-01-02")
 
-	fmt.Println("uptime:", uptime)
+	return result, nil
 
-	// 1, 5, and 15 minute load averages
-	fmt.Println("loads:", info.Loads)
-
-	// Total usable main memory size
-	fmt.Printf("total ram:%.2f GB \n", float64(info.Totalram)/float64(GB))
-
-	// Available memory size
-	fmt.Printf("free ram: %.2f GB \n", float64(info.Freeram)/float64(GB))
-
-	// Amount of shared memory
-	fmt.Printf("shared ram: %.2f GB \n", float64(info.Sharedram)/float64(GB))
-
-	// Total swap space size
-	fmt.Printf("total swap: %.2f GB \n", float64(info.Totalswap)/float64(GB))
-
-	// Swap space still available
-	fmt.Printf("free swap: %.2f GB \n", float64(info.Freeswap)/float64(GB))
 }
