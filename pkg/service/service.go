@@ -23,6 +23,6 @@ func New(cfg *config.Config) *Service {
 	}
 }
 
-func RunAndServe() [
-	
-]
+func RunAndServe() {
+	getHWStatus(5)
+}
