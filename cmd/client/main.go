@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"gomonclient/pkg/docker/dockercheck"
+	"time"
+)
 
 //"fmt"
 //"time"
@@ -22,8 +25,8 @@ func main() {
 	//		fmt.Println("CpuUsage")
 	//		CpuUsage()
 	//		fmt.Println()
-	//		time.Sleep(8 * time.Second)
+	//		time.Sleep(8 * time.Secondu
 	//	}
 
-	fmt.Println(getDockerState())
+	dockercheck.CheckDockerState(10 * time.Second)
 }
