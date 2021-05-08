@@ -8,8 +8,8 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func getDockerState() []docker.RunContainers {
-	var RunContainersState []docker.RunContainers
+func getDockerState() []docker.RunningContainer {
+	var RunContainersState []docker.RunningContainer
 
 	cli, err := client.NewEnvClient()
 	if err != nil {
@@ -32,7 +32,7 @@ func getDockerState() []docker.RunContainers {
 		//fmt.Print(container.State)
 		//fmt.Print(" -- ")
 		//fmt.Println(container.Ports)
-		RunContainersState = append(RunContainersState, docker.RunContainers{
+		RunContainersState = append(RunContainersState, docker.RunningContainer{
 			ContId:    container.ID,
 			ContName:  container.Names,
 			ContState: container.State,

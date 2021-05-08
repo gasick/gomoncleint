@@ -8,13 +8,13 @@ import (
 )
 
 func CheckDockerState(delay time.Duration) {
-	var Reference []docker.RunContainers
+	var Reference []docker.RunningContainer
 	Reference = getDockerState()
 
 	for {
 		fmt.Println("\n\nChecking docker state:")
 		if Reference != nil {
-			var currentDockerState []docker.RunContainers
+			var currentDockerState []docker.RunningContainer
 			currentDockerState = getDockerState()
 			if reflect.DeepEqual(Reference, currentDockerState) {
 				for i, v := range Reference {
