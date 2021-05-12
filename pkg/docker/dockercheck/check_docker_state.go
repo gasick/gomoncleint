@@ -16,6 +16,7 @@ func CheckDockerState(delay time.Duration) {
 		if Reference != nil {
 			var currentDockerState []docker.RunningContainer
 			currentDockerState = getDockerState()
+			docker.StructContains(Reference, currentDockerState[0])
 			if reflect.DeepEqual(Reference, currentDockerState) {
 				for i, v := range Reference {
 					if v.ContId != currentDockerState[i].ContId || v.ContState != currentDockerState[i].ContState {

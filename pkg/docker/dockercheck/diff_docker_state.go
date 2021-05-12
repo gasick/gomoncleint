@@ -16,15 +16,12 @@ func getStructureDiff(reference []docker.RunningContainer, currentState []docker
 			switch {
 			case len(reference) > len(currentState):
 				{
-					for i, v := range reference{
-					
-					
+					//for i, v := range reference{
 
 					diagnosis = "Был остановлен контейнер"
-					}
-					}
 
 				}
+
 			case len(reference) < len(currentState):
 				{
 					diagnosis = "Был запущен контейнер"
