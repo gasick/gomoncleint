@@ -16,7 +16,7 @@ func getDockerState() []docker.RunningContainer {
 		panic(err)
 	}
 
-	// Получение списка запуцщенных контейнеров(docker ps)
+	// Получение списка запущенных контейнеров(docker ps)
 	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
 	if err != nil {
 		panic(err)

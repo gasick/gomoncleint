@@ -14,15 +14,15 @@ type RunningContainer struct {
 	ContPorts []types.Port
 }
 
+type Message string
+
 //Функция сравнения списка структур с эталаном.
 func StructContains(reference []RunningContainer, val RunningContainer) bool {
+	fmt.Println("\n\tEntering StructContains")
 	value := false
 	for _, item := range reference {
 		if StructEquality(item, val) {
 			value = true
-		} else {
-			StructFieldEquality(item, val)
-			value = false
 		}
 	}
 	return value
@@ -30,6 +30,7 @@ func StructContains(reference []RunningContainer, val RunningContainer) bool {
 
 // Функция сравнения полей стуктуры
 func StructFieldEquality(reference RunningContainer, val RunningContainer) (bool, string) {
+	fmt.Println("\n\tEntering StructFiledEquality")
 	value := false
 	rStruct := reflect.ValueOf(reference)
 	vStruct := reflect.ValueOf(val)
@@ -38,6 +39,7 @@ func StructFieldEquality(reference RunningContainer, val RunningContainer) (bool
 
 	for i := 0; i < rStruct.NumField(); i++ {
 		if rValues[i] == vValues[i] {
+			fmt.Printf("rStruct.Field(%d).Interface(): ", i)
 			fmt.Println(rStruct.Field(i).Interface())
 		}
 	}
@@ -47,24 +49,19 @@ func StructFieldEquality(reference RunningContainer, val RunningContainer) (bool
 
 // Функция сравнения двух структур
 func StructEquality(reference RunningContainer, val RunningContainer) bool {
-	value := false
+	fmt.Println("\n\tEntering StructEquality")
 	rStruct := reflect.ValueOf(reference)
 	vStruct := reflect.ValueOf(val)
 	rValues := make([]interface{}, rStruct.NumField())
 	vValues := make([]interface{}, vStruct.NumField())
 
-	for i := 0; i < rStruct.NumField(); i++ {
-		rValues[i] = rStruct.Field(i).Interface()
-	}
+	fmt.Println("\n\t\t---***___")
+	fmt.Println("\n\t\t---***___")
 
-	for i := 0; i < vStruct.NumField(); i++ {
-		vValues[i] = vStruct.Field(i).Interface()
-	}
-
-	fmt.Println("rValues")
+	fmt.Println("rValues:")
 	fmt.Println(rValues)
-	fmt.Println("vValues")
+	fmt.Println("vValues:")
 	fmt.Println(vValues)
 
-	return value
+	return reflect.DeepEqual(vValues, rValues)
 }
