@@ -26,6 +26,7 @@ func StructContains(reference []RunningContainer, val RunningContainer) (bool, s
 			value = true
 		} else {
 			value, difference = StructFieldEquality(item, val)
+			fmt.Printf("*** -- " + difference)
 		}
 	}
 	return value, difference
@@ -42,11 +43,19 @@ func StructFieldEquality(reference RunningContainer, val RunningContainer) (bool
 	vValues := make([]interface{}, vStruct.NumField())
 
 	for i := 0; i < rStruct.NumField(); i++ {
-		if rValues[i] == vValues[i] {
-			message = fmt.Sprintf("%v", rValues[i])
-			fmt.Printf(message)
+		fmt.Println(i)
+		if rValues[i] != vValues[i] {
+			fmt.Println("---***---")
+			fmt.Println(rStruct.Field(i))
+			message = fmt.Sprintf("%s", rStruct.Field(i))
+			fmt.Printf(message + "\n")
+			fmt.Print("message inside: ")
+			fmt.Println(message)
 		}
 	}
+
+	fmt.Print("message outside: ")
+	fmt.Println(message)
 
 	return value, message
 }

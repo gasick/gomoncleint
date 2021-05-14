@@ -17,10 +17,13 @@ func CheckDockerState(delay time.Duration) {
 		if Reference != nil {
 			var currentDockerState []docker.RunningContainer
 			currentDockerState = getDockerState()
-			val, dockerMessage := docker.StructContains(Reference, currentDockerState[0])
-			fmt.Println("\n\n^^^^^^^^^^")
-			fmt.Println(dockerMessage, val)
-			fmt.Println("^^^^^^^^^^")
+			fmt.Println("\n\nloop for for ")
+			for _, item := range currentDockerState {
+				val, dockerMessage := docker.StructContains(Reference, item)
+				fmt.Println("\n\n^^^^^^^^^^")
+				fmt.Printf("Difference was: %v -- %s\n", val, dockerMessage)
+				fmt.Println("^^^^^^^^^^")
+			}
 			if reflect.DeepEqual(Reference, currentDockerState) {
 				for i, v := range Reference {
 					if v.ContId != currentDockerState[i].ContId || v.ContState != currentDockerState[i].ContState {
