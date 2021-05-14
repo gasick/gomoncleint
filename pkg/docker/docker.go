@@ -17,21 +17,25 @@ type RunningContainer struct {
 type Message string
 
 //Функция сравнения списка структур с эталаном.
-func StructContains(reference []RunningContainer, val RunningContainer) bool {
+func StructContains(reference []RunningContainer, val RunningContainer) (bool, string) {
 	fmt.Println("\n\tEntering StructContains")
+	difference := ""
 	value := false
 	for _, item := range reference {
 		if StructEquality(item, val) {
 			value = true
+		} else {
+			value, difference = StructFieldEquality(item, val)
 		}
 	}
-	return value
+	return value, difference
 }
 
 // Функция сравнения полей стуктуры
 func StructFieldEquality(reference RunningContainer, val RunningContainer) (bool, string) {
 	fmt.Println("\n\tEntering StructFiledEquality")
 	value := false
+	message := ""
 	rStruct := reflect.ValueOf(reference)
 	vStruct := reflect.ValueOf(val)
 	rValues := make([]interface{}, rStruct.NumField())
@@ -39,29 +43,17 @@ func StructFieldEquality(reference RunningContainer, val RunningContainer) (bool
 
 	for i := 0; i < rStruct.NumField(); i++ {
 		if rValues[i] == vValues[i] {
-			fmt.Printf("rStruct.Field(%d).Interface(): ", i)
-			fmt.Println(rStruct.Field(i).Interface())
+			message = fmt.Sprintf("%v", rValues[i])
+			fmt.Printf(message)
 		}
 	}
 
-	return value, "test"
+	return value, message
 }
 
 // Функция сравнения двух структур
 func StructEquality(reference RunningContainer, val RunningContainer) bool {
 	fmt.Println("\n\tEntering StructEquality")
-	rStruct := reflect.ValueOf(reference)
-	vStruct := reflect.ValueOf(val)
-	rValues := make([]interface{}, rStruct.NumField())
-	vValues := make([]interface{}, vStruct.NumField())
 
-	fmt.Println("\n\t\t---***___")
-	fmt.Println("\n\t\t---***___")
-
-	fmt.Println("rValues:")
-	fmt.Println(rValues)
-	fmt.Println("vValues:")
-	fmt.Println(vValues)
-
-	return reflect.DeepEqual(vValues, rValues)
+	return reflect.DeepEqual(reference, val)
 }
